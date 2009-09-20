@@ -12,7 +12,7 @@
 	  node (first path)]
       (if (= node end)
 	(reverse path)
-	(bfs end
+	(recur end
 	     (concat (rest queue)
 		     (new-paths path node net))
 	     net)))))
