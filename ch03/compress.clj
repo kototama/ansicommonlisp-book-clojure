@@ -13,7 +13,7 @@
     (let [elt (first lst)
 	  rst (uncompress (rest lst))]
       (if (list? elt)
-	(into rst (apply #(take %1 (iterate identity %2)) elt))
+	(concat (apply #(take %1 (repeat %2)) elt) rst)
 	(cons elt rst)))))
 
 (defn- compr [elt n lst]
