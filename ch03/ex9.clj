@@ -8,6 +8,9 @@
   (reverse (last (sort-by count (dfs net end [start] [] [])))))
 
 (defn- dfs [net end [node :as path] allpaths tovisit]
+  ;; this algorithm is fun and terminal recursive but not efficient.
+  ;; an efficient algorithm for shortest / longest path is the Dijkstra's algorithm
+
   "Depth-first search with tail recursion. Return all possible paths that go to element end"
   ;; node is the current explored node
   ;; path is the current path leading to the node
