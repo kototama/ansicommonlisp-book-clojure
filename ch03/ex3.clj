@@ -3,7 +3,7 @@
 (declare count-occurences)
 
 (defn occurences [col]
-  (reverse (sort-by (fn [[v occ]] occ) (count-occurences col))))
+  (sort-by (fn [[v occ]] occ) > (count-occurences col)))
 
 (defn- count-occurences [col]
   "return a map key/nb_occurences"
