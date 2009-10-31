@@ -23,14 +23,14 @@
   (loop [bst bst
          acc '()]
     (if (nil? bst)
-        (loop [tree (struct node x)
-               stack acc]
-          (let [[lr elt branch] (first stack)]
-            (if (empty? stack)
-              tree
-              (if (= lr :l)
-                (recur (struct node elt branch tree) (rest stack))
-                (recur (struct node elt tree branch) (rest stack))))))
+      (loop [tree (struct node x)
+             stack acc]
+        (let [[lr elt branch] (first stack)]
+          (if (empty? stack)
+            tree
+            (if (= lr :l)
+              (recur (struct node elt branch tree) (rest stack))
+              (recur (struct node elt tree branch) (rest stack))))))
       (let [elt (:elt bst)]
         (if (= x elt)
           bst
