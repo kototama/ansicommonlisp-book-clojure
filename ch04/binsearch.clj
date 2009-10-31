@@ -1,7 +1,7 @@
 (use 'clojure.contrib.def)
 (use 'clojure.contrib.import-static)
 
-(import-static java.lang.Math floor)
+(import-static java.lang.Math ceil)
 
 (declare finder round)
 
@@ -21,7 +21,7 @@
 ;; is a round that returns 0 when passed 0.5
 ;;
 (defn- round [x]
-  (int (floor (- x 0.5))))
+  (int (ceil (- x 0.5))))
 
 (defn- finder [vec x start end]
   ;; (printf "%s\n" (subvec vec start end))
