@@ -34,9 +34,9 @@
             y (get vec mid)]
         ;; (printf "rng = %s mid = %s s = %s e = %s y = %s\n\n", rng mid start end y)
         (if (< x y)
-          (finder vec x start (dec mid))
+          (recur vec x start (dec mid))
           (if (> x y)
-            (finder vec x (inc mid) end)
+            (recur vec x (inc mid) end)
             true))))))
   
 (comment
