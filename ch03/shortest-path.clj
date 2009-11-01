@@ -13,9 +13,9 @@
       (if (= node end)
 	(reverse path)
 	(recur end
-	     (concat (rest queue)
-		     (new-paths path node net))
-	     net)))))
+	       (concat (rest queue)
+		       (new-paths path node net))
+	       net)))))
 
 (defn- new-paths [path node net]
   (map #(cons % path) (net node)))
@@ -24,6 +24,7 @@
 (comment 
  
   (def minnet { 'a '(b c), 'b '(c), 'c '(d)})
-  (shortest-path 'a 'd minnet)	 ;; (a c d)
+  (shortest-path 'a 'd minnet) ;; (a c d)
 
-)		     
+  )		     
+
