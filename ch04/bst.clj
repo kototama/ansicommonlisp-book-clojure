@@ -1,5 +1,7 @@
 (use 'clojure.contrib.def)
 
+(declare percolate rperc lperc)
+
 (defstruct node :elt :l :r)
 
 (defn bst-insert [bst x comp]
@@ -56,6 +58,50 @@
   (and bst
        (or (bst-max (:r bst)) bst)))
 
+(defn bst-remove [bst x comp]
+  (if (nil? bst)
+    nil
+    (let [elt (:elt bst)]
+      (if (= x elt)
+        (percolate bst)
+        (if (comp x elt)
+          (struct node
+                  elt
+                  (bst-remove (:l bst) x comp)
+                  (:r bst))
+          (struct node
+                  elt
+                  (:l bst)
+                  (bst-remove (:r bst) x comp)))))))
+
+(defn bst-traverse [bst f]
+  (when bst
+    (bst-traverse (:l bst) f)
+    (f (:elt bst))
+    (bst-traverse (:r bst) f)))
+
+(defn- percolate [bst]
+  (cond (nil? (:l bst)) (if (nil? (:r bst))
+                          nil
+                          (rperc bst))
+        (nil? (:r bst)) (lperc bst)
+        :else (if (zero? (rand-int 2))
+                 (lperc bst)
+                 (rperc bst))))
+
+(defn- rperc [bst]
+  (struct node
+          (:elt (:r bst))
+          (:l bst)
+          (percolate (:r bst))))
+
+(defn- lperc [bst]
+  (struct node
+          (:elt (:l bst))
+          (percolate (:l bst))
+          (:r bst)))
+
+
 (comment
 
   (def nums (reduce (fn [acc x] (bst-insert acc x <)) nil [5 8 4 2 1 9 6 7 3]))
@@ -68,6 +114,9 @@
 
   (bst-min nums) ; {:elt 1, :l nil, :r nil}
   (bst-max nums) ; {:elt 9, :l nil, :r nil}
+
+  (bst-traverse (bst-remove nums 2 <) print) ; 13456789
+  
 
 )
 
