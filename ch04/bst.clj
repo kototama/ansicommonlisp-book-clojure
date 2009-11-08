@@ -66,8 +66,8 @@
         (if (= x elt)
           bst
           (if (cmp x elt)
-            (recur (:l bst) (comp f (fn [l] (struct-map node :elt elt :r (:r bst) :l l))))
-            (recur (:r bst) (comp f (fn [r] (struct-map node :elt elt :l (:l bst) :r r))))))))))
+            (recur (:l bst) (comp f (fn [l] (struct node elt l (:r bst)))))
+            (recur (:r bst) (comp f (fn [r] (struct node elt (:l bst) r))))))))))
 
 (defn bst-find [bst x comp]
   (if (nil? bst)
