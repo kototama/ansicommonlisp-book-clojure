@@ -58,18 +58,16 @@
             (recur (:r bst) (cons [:l elt (:l bst)] acc))))))))
 
 (defn bst-insert-tc3 [bst x cmp]
-  (if (nil? bst)
-    (struct node x)
-    (loop [bst bst
-           f identity]
-      (if (nil? bst)
-        (f (struct node x))
-        (let [elt (:elt bst)]
-          (if (= x elt)
-            bst
-            (if (cmp x elt)
-              (recur (:l bst) (comp f (fn [l] (struct-map node :elt elt :r (:r bst) :l l))))
-              (recur (:r bst) (comp f (fn [r] (struct-map node :elt elt :l (:l bst) :r r)))))))))))
+  (loop [bst bst
+         f identity]
+    (if (nil? bst)
+      (f (struct node x))
+      (let [elt (:elt bst)]
+        (if (= x elt)
+          bst
+          (if (cmp x elt)
+            (recur (:l bst) (comp f (fn [l] (struct-map node :elt elt :r (:r bst) :l l))))
+            (recur (:r bst) (comp f (fn [r] (struct-map node :elt elt :l (:l bst) :r r))))))))))
 
 (defn bst-find [bst x comp]
   (if (nil? bst)
