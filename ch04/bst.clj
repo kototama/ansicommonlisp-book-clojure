@@ -1,6 +1,6 @@
 (use 'clojure.contrib.def)
 
-(declare percolate rperc lperc)
+(declare percolate bst-remove-max bst-remove-min)
 
 (defstruct node :elt :l :r)
 
@@ -109,26 +109,37 @@
     (f (:elt bst))
     (bst-traverse (:r bst) f)))
 
+
 (defn- percolate [bst]
-  (cond (nil? (:l bst)) (if (nil? (:r bst))
-                          nil
-                          (rperc bst))
-        (nil? (:r bst)) (lperc bst)
-        :else (if (zero? (rand-int 2))
-                 (lperc bst)
-                 (rperc bst))))
+  (let [l (:l bst)
+        r (:r bst)]
+    (cond (nil? l) r
+          (nil? r) l
+          :else (if (zero? (rand-int 2))
+                  (struct node 
+                          (:elt (bst-max bst))
+                          (bst-remove-max (:l bst)) 
+                          r)
+                  (struct node 
+                          (:elt (bst-min bst))
+                          l
+                          (bst-remove-min (:r bst)))))))
 
-(defn- rperc [bst]
-  (struct node
-          (:elt (:r bst))
-          (:l bst)
-          (percolate (:r bst))))
+(defn- bst-remove-min [bst]
+  (if (nil? (:l bst))
+    (:r bst)
+    (struct node 
+            (:elt bst)
+            (bst-remove-min (:l bst))
+            (:r bst))))
 
-(defn- lperc [bst]
-  (struct node
-          (:elt (:l bst))
-          (percolate (:l bst))
-          (:r bst)))
+(defn- bst-remove-max [bst]
+  (if (nil? (:r bst))
+    (:l bst)
+    (struct node 
+            (:elt bst)
+            (:l bst)
+            (bst-remove-max (:r bst)))))
 
 
 (comment
@@ -147,6 +158,18 @@
   (bst-max nums) ; {:elt 9, :l nil, :r nil}
 
   (bst-traverse (bst-remove nums 2 <) print) ; 13456789
+
+  ;; test against the errata code for bst-remove
+  ;; see http://codangaems.blogspot.com/2008/01/ansi-common-lisp-and-bst-remove.html
+  ;; and http://www.paulgraham.com/ancomliser.html
+
+  (def simple (reduce (fn [acc x] (bst-insert acc x <)) nil [5 2 1 3]))
+
+  (def invalidtree {:elt 3, :l {:elt 1, :l nil, :r nil}, :r nil})
+
+  (dotimes [_ 10000]
+    (if (= (bst-remove (bst-remove simple 2 <) 5 <) invalidtree)
+      (printf "test failed\n")))
 
 )
 
