@@ -36,5 +36,5 @@
 ;; (compile 'ex9.PathFoundException)
 
 ;; (import 'ex9.PathFoundException)
-;; (.setPath PathFoundException. [1 2 3])
+;; (PathFoundException. [1 2 3])
 
