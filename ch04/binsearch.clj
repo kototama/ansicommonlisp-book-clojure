@@ -27,9 +27,7 @@
   ;; (printf "%s\n" (subvec vec start end))
   (let [rng (- end start)]
     (if (zero? rng)
-      (if (= x (get vec start))
-        true
-        false)
+      (= x (get vec start))
       (let [mid (+ start (round (double (/ rng 2))))
             y (get vec mid)]
         ;; (printf "rng = %s mid = %s s = %s e = %s y = %s\n\n", rng mid start end y)
