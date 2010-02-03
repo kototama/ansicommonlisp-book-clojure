@@ -5,7 +5,7 @@
 (let [maxsofar (atom nil)]
   (defn max-so-far [n]
     (if (or (nil? @maxsofar) (> n @maxsofar))
-      (swap! maxsofar (fn [old] n))
+      (swap! maxsofar (constantly n))
       @maxsofar)))
 
 

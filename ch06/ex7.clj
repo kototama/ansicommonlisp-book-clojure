@@ -3,7 +3,7 @@
 (let [lastval (atom nil)]
   (defn greater-than-last? [n]
     (let [prev @lastval]
-      (swap! lastval (fn [old] n))
+      (swap! lastval (constantly n))
       (if (not (nil? prev))
         (> n prev)
         false))))
