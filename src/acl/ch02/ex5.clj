@@ -1,3 +1,5 @@
+(ns acl.ch02.ex5)
+
 ;; The main difference with the Lisp version is :
 ;; in Clojure (nil? '()) is false
 ;; whereas in Lisp (null '()) is true
