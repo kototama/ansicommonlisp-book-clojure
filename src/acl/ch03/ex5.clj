@@ -5,7 +5,7 @@
   (map (fn [x] (+ (first x) (second x))) (indexed col)))
 
 (defn pos+2 [col]
-  (loop [res '() 
+  (loop [res () 
 	 l col
 	 acc 0]
     (if-not (empty? l)

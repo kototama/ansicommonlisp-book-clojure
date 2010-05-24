@@ -1,5 +1,6 @@
-(use 'clojure.contrib.def)
-(use 'clojure.contrib.import-static)
+(ns acl.ch04.binsearch
+ (:use clojure.contrib.def
+       clojure.contrib.import-static))
 
 (import-static java.lang.Math ceil)
 
@@ -36,10 +37,3 @@
           (if (> x y)
             (recur vec x (inc mid) end)
             true))))))
-  
-(comment
-
-  (bincontains? [1 2 3 4 5 6] 9) ;; false
-  (bincontains? [0 1 2 3 4 5 6 7 8 9] 6) ;; true
-
-)

@@ -1,4 +1,5 @@
-(use 'clojure.contrib.def)
+(ns acl.ch04.bst
+ (:use clojure.contrib.def))
 
 (declare percolate bst-remove-max bst-remove-min)
 
@@ -23,7 +24,7 @@
 ;; with tail call
 (defn bst-insert-tc [bst x comp]
   (loop [bst bst
-         acc '()]
+         acc ()]
     (if (nil? bst)
       (loop [tree (struct node x)
              stack acc]
@@ -40,9 +41,10 @@
             (recur (:l bst) (cons [:r elt (:r bst)] acc))
             (recur (:r bst) (cons [:l elt (:l bst)] acc))))))))
 
+;; tail call without loop
 (defn bst-insert-tc2 [bst x comp]
   (loop [bst bst
-         acc '()]
+         acc ()]
     (if (nil? bst)
       (reduce (fn [tree [lr elt branch]]
                 (if (= lr :l)
@@ -57,6 +59,9 @@
             (recur (:l bst) (cons [:r elt (:r bst)] acc))
             (recur (:r bst) (cons [:l elt (:l bst)] acc))))))))
 
+;; tail call with function composition
+;; see http://inclojurewetrust.blogspot.com/2009/11/tail-recursion-and-function-composition.html
+;;
 (defn bst-insert-tc3 [bst x cmp]
   (loop [bst bst
          f identity]
@@ -141,36 +146,5 @@
             (:l bst)
             (bst-remove-max (:r bst)))))
 
-
-(comment
-
-  (def nums (reduce (fn [acc x] (bst-insert acc x <)) nil [5 8 4 2 1 9 6 7 3]))
-  (def nums2 (reduce (fn [acc x] (bst-insert-tc acc x <)) nil [5 8 4 2 1 9 6 7 3]))
-  (def nums3 (reduce (fn [acc x] (bst-insert-tc2 acc x <)) nil [5 8 4 2 1 9 6 7 3]))
-  (def nums4 (reduce (fn [acc x] (bst-insert-tc3 acc x <)) nil [5 8 4 2 1 9 6 7 3]))
-
-  (= nums nums2 nums3 nums4)
-
-  (bst-find nums 12 <) ; nil
-  (bst-find nums 4 <) ; {:elt 4, :l {:elt 2, :l {:elt 1, :l nil, :r nil}, :r {:elt 3, :l nil, :r nil}}, :r nil}
-
-  (bst-min nums) ; {:elt 1, :l nil, :r nil}
-  (bst-max nums) ; {:elt 9, :l nil, :r nil}
-
-  (bst-traverse (bst-remove nums 2 <) print) ; 13456789
-
-  ;; test against the errata code for bst-remove
-  ;; see http://codangaems.blogspot.com/2008/01/ansi-common-lisp-and-bst-remove.html
-  ;; and http://www.paulgraham.com/ancomliser.html
-
-  (def simple (reduce (fn [acc x] (bst-insert acc x <)) nil [5 2 1 3]))
-
-  (def invalidtree {:elt 3, :l {:elt 1, :l nil, :r nil}, :r nil})
-
-  (dotimes [_ 10000]
-    (if (= (bst-remove (bst-remove simple 2 <) 5 <) invalidtree)
-      (printf "test failed\n")))
-
-)
 
 

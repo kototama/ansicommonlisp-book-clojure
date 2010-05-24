@@ -5,7 +5,7 @@
 (defn read-exprs [filename]
   (with-open [pbrdr (PushbackReader. (reader filename))]
     (loop [curexpr (read pbrdr false :eof)
-           exprs '()]
+           exprs ()]
       (if (= curexpr :eof)
         (reverse exprs)
         (recur (read pbrdr false :eof) (conj exprs curexpr))))))
