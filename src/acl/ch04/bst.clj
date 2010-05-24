@@ -12,14 +12,8 @@
       (if (= x elt)
         bst
         (if (comp x elt)
-          (struct node
-                  elt
-                  (bst-insert (:l bst) x comp)
-                  (:r bst))
-          (struct node
-                  elt
-                  (:l bst)
-                  (bst-insert (:r bst) x comp)))))))
+          (assoc bst :l (bst-insert (:l bst) x comp))
+          (assoc bst :r (bst-insert (:r bst) x comp)))))))
 
 ;; with tail call
 (defn bst-insert-tc [bst x comp]
@@ -99,14 +93,8 @@
       (if (= x elt)
         (percolate bst)
         (if (comp x elt)
-          (struct node
-                  elt
-                  (bst-remove (:l bst) x comp)
-                  (:r bst))
-          (struct node
-                  elt
-                  (:l bst)
-                  (bst-remove (:r bst) x comp)))))))
+          (assoc bst :l (bst-remove (:l bst) x comp))
+          (assoc bst :r (bst-remove (:r bst) x comp)))))))
 
 (defn bst-traverse [bst f]
   (when bst
@@ -120,15 +108,10 @@
         r (:r bst)]
     (cond (nil? l) r
           (nil? r) l
-          :else (if (zero? (rand-int 2))
-                  (struct node 
-                          (:elt (bst-max bst))
-                          (bst-remove-max (:l bst)) 
-                          r)
-                  (struct node 
-                          (:elt (bst-min bst))
-                          l
-                          (bst-remove-min (:r bst)))))))
+          :else
+          (if (zero? (rand-int 2))
+            (assoc bst :elt (bst-max bst) :l (bst-remove-max (:l bst)))
+            (assoc bst :elt (bst-min bst) :r (bst-remove-min (:r bst)))))))
 
 (defn- bst-remove-min [bst]
   (if (nil? (:l bst))
