@@ -1,5 +1,4 @@
-(use 'clojure.contrib.import-static)
-(import-static java.lang.Math abs)
+(ns acl.ch05.ex7)
 
 (defn continuous-pairs? [col]
-  (every? (fn [[x y]] (= (abs (- x y)) 1)) (partition 2 col)))
+  (every? (fn [[x y]] (= (Math/abs (- x y)) 1)) (partition 2 col)))

@@ -1,12 +1,14 @@
+(ns acl.ch05.ex2)
+
 (defn mystery [x y] 
   "Return the first position of the element x in the list, 
   or nil it does not exist"
   (if (empty? y)	
-      nil
-      (if (= (first y) x)
-	  0
-	  (let [z (mystery x (rest y))]
-	    (and z (+ z 1))))))
+    nil
+    (if (= (first y) x)
+      0
+      (let [z (mystery x (rest y))]
+        (and z (+ z 1))))))
 
 (defn mystery2 [x y]
   "Return the first position of the element x in the list, 

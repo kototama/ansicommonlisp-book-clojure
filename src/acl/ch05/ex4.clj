@@ -1,6 +1,9 @@
-(def *month* [0 31 59 90 120 151 181 212 243 273 304 334 365])
+(ns acl.ch05.ex4
+  (:use clojure.contrib.def))
 
-(defn leap? [y]
+(defvar- *month* [0 31 59 90 120 151 181 212 243 273 304 334 365])
+
+(defn- leap? [y]
   (and (zero? (mod y 4))
        (or (zero? (mod y 400))
            (not (zero? (mod y 100))))))
@@ -24,11 +27,3 @@
        11 304
        12 334)
      (if (and (> m 2) (leap? y)) 1 0)))
-
-
-(= (month-num2 1 2000) (month-num 1 2000))
-(= (month-num2 12 2004) (month-num 12 2004))
-
-
-
-

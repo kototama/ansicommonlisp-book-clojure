@@ -1,4 +1,7 @@
-(defn precedes-helper [col x pre preds]
+(ns acl.ch05.ex5
+  (:use clojure.contrib.def))
+
+(defn- precedes-helper [col x pre preds]
   (if (empty? col)
     preds
     (let [el (first col)]
@@ -8,5 +11,3 @@
 
 (defn precedes [col x]
   (precedes-helper  (rest col) x (first col) #{}))
-
-(precedes "abracadabra" \a) ;; #{\c \d \r}

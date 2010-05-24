@@ -1,17 +1,4 @@
-;; to compile this
-;; be sure to have ch05 and ch05/classes in your java path
-;; Check with (System/getProperty "java.class.path")
-;;
-;; here is what I have in my .emacs for swank
-;;
-;; (setq swank-clojure-classpath (list "~/.swank-clojure/*"
-;; "~/Documents/Projects/Clojure/ansicommonlisp-book-clojure/ch05/"
-;; "~/Documents/Projects/Clojure/ansicommonlisp-book-clojure/ch05/classes"))
-;;
-;; then make (compile 'ex9.PathFoundException)
-;; 
-
-(ns ex9.PathFoundException
+(ns acl.ch05.ex9.PathFoundException
   (:import java.util.List)
   (:gen-class 
    :extends Exception
@@ -33,8 +20,10 @@
 (defn -getPath [this]
   @(.state this))
 
-;; (compile 'ex9.PathFoundException)
+;; to compile:
+;;(compile 'acl.ch05.ex9.PathFoundException)
 
-;; (import 'ex9.PathFoundException)
+;; some test
+;; (import 'acl.ch05.ex9.PathFoundException)
 ;; (PathFoundException. [1 2 3])
 

@@ -1,5 +1,6 @@
-(use 'clojure.contrib.def)
-(import 'ex9.PathFoundException)
+(ns acl.ch05.ex9
+ (:use clojure.contrib.def)
+ (:import acl.ch05.ex9.PathFoundException))
 
 (declare bfs new-paths)
 
@@ -22,12 +23,3 @@
 
 (defn- new-paths [path node net]
   (map #(cons % path) (net node)))
-
-
-(comment 
- 
-  (def minnet { 'a '(b c), 'b '(c), 'c '(d)})
-  (shortest-path 'a 'd minnet) ;; (a c d)
-
- )
-
