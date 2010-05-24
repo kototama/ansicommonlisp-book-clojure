@@ -1,4 +1,5 @@
-(use '[clojure.contrib.seq-utils :only (indexed)])
+(ns acl.ch03.ex5
+ (:use [clojure.contrib.seq-utils :only (indexed)]))
     
 (defn pos+ [col]
   (map (fn [x] (+ (first x) (second x))) (indexed col)))
@@ -11,6 +12,3 @@
       (recur (conj res (+ (first l) acc)) (rest l) (inc acc))
       (reverse res))))
       
-(pos+ [7 5 1 4]) ;; (7 6 3 7)
-
-(pos+2 '(7 5 1 4)) ;; (7 6 3 7)

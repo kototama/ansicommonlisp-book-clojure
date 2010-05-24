@@ -11,8 +11,3 @@
       (if (nil? x)
 	(summit2 (rest lst))
 	(+ x (summit2 (rest lst)))))))
-
-(summit '(1 2 3 4)) ;; 10
-(summit nil) ;; 0
-(summit '(1 2 nil 4)) ;; 7
-

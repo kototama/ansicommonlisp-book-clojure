@@ -1,4 +1,5 @@
-(use 'clojure.contrib.def)
+(ns acl.ch03.compress
+ (:use clojure.contrib.def))
 
 (declare compr pack)
 
@@ -29,6 +30,3 @@
   (if (> n 1)
     (list n elt)
     elt))
-
-(compress '(1 1 1 0 1 0 0 0 0 1)) ;; ((3 1) 0 1 (4 0) 1)
-(uncompress '((3 1) 0 1 (4 0) 1)) ;; (1 1 1 0 1 0 0 0 0 1)

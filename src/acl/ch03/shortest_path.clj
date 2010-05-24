@@ -1,4 +1,5 @@
-(use 'clojure.contrib.def)
+(ns acl.ch03.shortest-path
+ (:use clojure.contrib.def))
 
 (declare bfs new-paths)
 
@@ -19,12 +20,3 @@
 
 (defn- new-paths [path node net]
   (map #(cons % path) (net node)))
-
-
-(comment 
- 
-  (def minnet { 'a '(b c), 'b '(c), 'c '(d)})
-  (shortest-path 'a 'd minnet) ;; (a c d)
-
-  )		     
-
