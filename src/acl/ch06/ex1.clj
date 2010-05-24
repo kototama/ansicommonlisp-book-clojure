@@ -7,13 +7,11 @@
 ;; a test function since we have regular expression in the JVM
 ;; and in Clojure!
 
+(ns acl.ch06.ex1)
+
 (defn tokens
   ([s]
      (tokens s {:regex #"\S+" :start 0}))
   ([s & [{:keys [regex start]}]]
      (re-seq regex s)))
-  
-;; user> (tokens "ab12 3cde.f" )
-;; ("ab12" "3cde.f")
-;; user> (tokens "ab12 3cde.f" {:regex #"[a-zA-Z]+"})
-;; ("ab" "cde" "f")
+
