@@ -23,6 +23,8 @@
 ;; to compile:
 ;;(compile 'acl.ch05.ex9.PathFoundException)
 
+;; or just add the namespace to the :aot vector of the project.clj file
+
 ;; some test
 ;; (import 'acl.ch05.ex9.PathFoundException)
 ;; (PathFoundException. [1 2 3])
