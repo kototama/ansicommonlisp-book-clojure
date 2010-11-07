@@ -12,21 +12,20 @@
   (symbol s))
 
 (defn read-text [pathname]
-  (letfn []
-   (reduce (fn [stats line]
-             (let [line (str/replace line #" +" " ")
-                   words (re-seq #"([a-z'àçéêèëùA-Z]+|[.,;!?]+)" line)
-                   words (map first words)]
-               (reduce (fn [stats word]
-                         (let [word (internize word)
-                               prev (:prev stats)
-                               stats (if-let [noccur (get-in stats [prev word])]
-                                         (update-in stats [prev word] inc)
-                                         (assoc-in stats [prev word] 1))]
-                           (assoc stats :prev word)))
-                       stats words)))
-           {:prev (internize ".")}
-           (read-lines pathname))))
+  (reduce (fn [stats line]
+            (let [line (str/replace line #" +" " ")
+                  words (re-seq #"([a-z'àçéêèëùA-Z]+|[.,;!?]+)" line)
+                  words (map first words)]
+              (reduce (fn [stats word]
+                        (let [word (internize word)
+                              prev (:prev stats)
+                              stats (if-let [noccur (get-in stats [prev word])]
+                                      (update-in stats [prev word] inc)
+                                      (assoc-in stats [prev word] 1))]
+                          (assoc stats :prev word)))
+                      stats words)))
+          {:prev (internize ".")}
+          (read-lines pathname)))
 
 (defn- random-next [stats prev]
   (let [choices (get stats prev)
