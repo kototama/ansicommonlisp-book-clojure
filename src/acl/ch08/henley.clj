@@ -39,17 +39,12 @@
           (recur diff (next choices)))))))
 
 (defn generate-text
-  ([n stats]
-     (generate-text n stats (internize ".")))
-  ([n stats prev]
-     ;; use a reduction instead?
-     (loop [n n
-            prev prev]
-       (when (pos? n)
-         (let [next (random-next stats prev)]
-           (printf "%s " next)
-           (recur (dec n) next))))
-     (println)))
+  [n stats]
+  (let [words (drop 1 (iterate #(random-next stats %) (internize ".")))
+        text (take n words)]
+    (doseq [word text]
+      (printf "%s " word))
+    (println)))
 
 ;; example:
 (let [stats (read-text "/home/ktm/Documents/Projects/Clojure/ansicommonlisp-book-clojure/src/acl/ch08/baudelaire.txt")]
