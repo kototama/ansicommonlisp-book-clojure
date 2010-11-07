@@ -13,8 +13,7 @@
 
 (defn read-text [pathname]
   (reduce (fn [stats line]
-            (let [line (str/replace line #" +" " ")
-                  words (re-seq #"([a-z'àçéêèëùA-Z]+|[.,;!?]+)" line)
+            (let [words (re-seq #"([a-z'àçéêèëùA-Z]+|[.,;!?]+)" line)
                   words (map first words)]
               (reduce (fn [stats word]
                         (let [word (internize word)
