@@ -11,4 +11,7 @@
     (if-not (empty? l)
       (recur (conj res (+ (first l) acc)) (rest l) (inc acc))
       (reverse res))))
-      
+
+;; suggestion of Stefan Tavera:
+(defn pos+3 [col]
+    (map + col (range (count col))))
