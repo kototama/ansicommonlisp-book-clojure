@@ -18,12 +18,12 @@
                    words (re-seq #"([a-z'àçéêèëùA-Z]+|[.,;!?]+)" line)
                    words (map first words)]
                (reduce (fn [stats word]
-                         (let [word (internize word)]
-                           (let [prev (:prev stats)]
-                             (let [stats (if-let [noccur (get-in stats [prev word])]
-                                           (update-in stats [prev word] inc)
-                                           (assoc-in stats [prev word] 1))]
-                               (assoc stats :prev word)))))
+                         (let [word (internize word)
+                               prev (:prev stats)
+                               stats (if-let [noccur (get-in stats [prev word])]
+                                         (update-in stats [prev word] inc)
+                                         (assoc-in stats [prev word] 1))]
+                           (assoc stats :prev word)))
                        stats words)))
            {:prev (internize ".")}
            (read-lines pathname))))
@@ -43,6 +43,7 @@
   ([n stats]
      (generate-text n stats (internize ".")))
   ([n stats prev]
+     ;; use a reduction instead?
      (loop [n n
             prev prev]
        (when (pos? n)
@@ -51,5 +52,6 @@
            (recur (dec n) next))))
      (println)))
 
+;; example:
 (let [stats (read-text "/home/ktm/Documents/Projects/Clojure/ansicommonlisp-book-clojure/src/acl/ch08/baudelaire.txt")]
   (generate-text 130 stats))
