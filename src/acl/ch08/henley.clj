@@ -19,7 +19,7 @@
               (reduce (fn [stats word]
                         (let [word (internize word)
                               prev (:prev stats)
-                              stats (if-let [noccur (get-in stats [prev word])]
+                              stats (if (get-in stats [prev word])
                                       (update-in stats [prev word] inc)
                                       (assoc-in stats [prev word] 1))]
                           (assoc stats :prev word)))
