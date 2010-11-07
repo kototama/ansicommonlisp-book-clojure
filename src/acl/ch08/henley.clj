@@ -1,10 +1,7 @@
 (ns acl.ch08.henley
   (:use clojure.contrib.def
         clojure.contrib.pprint
-        [clojure.contrib.duck-streams :only (read-lines
-                                             write-lines
-                                             reader
-                                             writer)])
+        [clojure.contrib.duck-streams :only (read-lines)])
   (:require [clojure.string :as str]))
 
 (defn internize [s]
