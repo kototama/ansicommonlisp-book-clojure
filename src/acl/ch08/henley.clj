@@ -29,14 +29,13 @@
 
 (defn- random-next [stats prev]
   (let [choices (get stats prev)
-        i (rand-int (reduce + (map second choices)))]
-    (loop [i i
-           choices choices]
-      (let [[word p] (first choices)
-            diff (- i p)]
-        (if (neg? diff)
-          word
-          (recur diff (next choices)))))))
+        cumulated (reductions + (map second choices))
+        i (rand-int (last cumulated))
+        cumulated (interleave (map first choices) cumulated)]
+    (first (first (filter
+                   (fn [cumu]
+                     (let [[word p] cumu]
+                       (< i p))) (partition 2 cumulated))))))
 
 (defn generate-text
   [n stats]
