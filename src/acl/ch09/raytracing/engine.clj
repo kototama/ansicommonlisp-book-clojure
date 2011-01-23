@@ -30,9 +30,8 @@
         world))
 
 (defn sendray [pt xr yr zr world]
-  (if-let [hitinfo (first-hit pt xr yr zr world)]
-    (let [[s i] hitinfo]
-      (* (lambert s i xr yr zr) (color s)))
+  (if-let [[s i] (first-hit pt xr yr zr world)]
+    (* (lambert s i xr yr zr) (color s))
     0))
 
 (defn color-at [x y world]
@@ -51,8 +50,6 @@
          (dorun
           (for [y (range -50 50 inc)
                 x (range -50 50 inc)]
-            (printf "%d " (color-at x y world))
-            ))
-         ;; (printf "<%d %> %d " x y (color-at x y world))
+            (printf "%d " (color-at x y world))))
          (prn)))))
 
