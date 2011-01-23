@@ -14,6 +14,6 @@
                (reduce (fn [[world z] [x y]]
                          [(conj world (create-sphere x y z 5 0.75))
                           (+ z 10)])
-                       [() 300]
-                       (spiral 10)))]
+                       [() 270]
+                       (spiral 20)))]
     (tracer "spheres.pgm" world res)))
