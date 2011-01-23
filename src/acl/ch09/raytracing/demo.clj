@@ -4,7 +4,7 @@
         acl.ch09.raytracing.engine))
 
 (defn -main []
-  (let [res 10
+  (let [res 1
         world (concat
                [(create-sphere 0 -300 -1200 200 0.8)
                 (create-sphere -80 -150 -1200 200 0.7)
