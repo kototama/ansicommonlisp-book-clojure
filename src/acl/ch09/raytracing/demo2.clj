@@ -9,8 +9,11 @@
        (range 0 (* 6 Math/PI) 0.1)))
 
 (defn -main []
-  (let [res 10
-        world (map (fn [[x y]]
-                     (create-sphere x y 700 5 0.75))
-                   (spiral 10))]
+  (let [res 5
+        world (first
+               (reduce (fn [[world z] [x y]]
+                         [(conj world (create-sphere x y z 5 0.75))
+                          (+ z 10)])
+                       [() 300]
+                       (spiral 10)))]
     (tracer "spheres.pgm" world res)))
