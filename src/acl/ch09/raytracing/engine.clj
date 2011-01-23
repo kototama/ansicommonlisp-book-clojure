@@ -46,11 +46,13 @@
      (tracer pathname world 1))
   ([pathname world res]
      (with-out-file pathname
-       (printf "P2 %d %d 255" (* res 100) (* res 100))
+       (printf "P2 %d %d 255 " (* res 100) (* res 100))
        (let [inc (/ res)]
          (dorun
-          (for [y (range -50 50 res)
-                x (range -50 50 res)]
-            (printf "%d " (color-at x y world))))
+          (for [y (range -50 50 inc)
+                x (range -50 50 inc)]
+            (printf "%d " (color-at x y world))
+            ))
+         ;; (printf "<%d %> %d " x y (color-at x y world))
          (prn)))))
 
